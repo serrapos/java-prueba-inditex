@@ -1,5 +1,6 @@
 package es.serrapos.inditex.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -46,10 +47,14 @@ public class Price {
     private Integer priority;
     
     @Column(name = "PRICE")
-    private CurrencyType price;
+    private BigDecimal price;
     
     @Column(name = "CURR")
     private String currency;
+    
+    public Price() {
+    	super();
+    }
 
 	public Long getId() {
 		return id;
@@ -107,11 +112,11 @@ public class Price {
 		this.priority = priority;
 	}
 
-	public CurrencyType getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(CurrencyType price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 

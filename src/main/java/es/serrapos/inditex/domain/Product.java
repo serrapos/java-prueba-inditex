@@ -1,7 +1,5 @@
 package es.serrapos.inditex.domain;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,6 +21,16 @@ public class Product {
     @Column(length = 100, unique = true, nullable = false, name = "DESCRIPTION")
     private String description;
     
+    public Product() {
+    	super();
+    }
+    
+	public Product(String name, String description) {
+		super();
+		this.name = name;
+		this.description = description;
+	}
+
 	public Long getId() {
 		return id;
 	}

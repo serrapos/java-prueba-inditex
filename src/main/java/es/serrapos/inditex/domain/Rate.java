@@ -16,6 +16,13 @@ public class Rate {
 
     @Column(length = 100, unique = true, nullable = false)
     private String name;
+    
+    public Rate() {
+	}
+
+	public Rate(String name) {
+		this.name = name;
+	}
 
 	public Long getId() {
 		return id;
