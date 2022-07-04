@@ -45,7 +45,7 @@ public class PriceRepositoryTest {
     }
 	
     @Test
-    public void getPriceByProductAndBrandAndDate() throws Exception {
+    public void testGetPriceByProductAndBrandAndDate() throws Exception {
     	Optional<Product> product = productRepository.findById(35455l);
 		Optional<Brand> brand = brandRepository.findById(1l);
 		SimpleDateFormat datetimeFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
