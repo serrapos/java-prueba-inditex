@@ -86,5 +86,12 @@ public class PriceRepositoryTest {
     	assertThat(priceRepository.getPriceByProductAndBrand(35455l, 1l, dateCase6).size()).isEqualTo(0);
     }
     
+    @Test
+    public void testGetPrice_Case1() throws Exception{
+    	SimpleDateFormat datetimeFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+		Date dateCase1 = datetimeFormatter.parse("2020-06-14 10:00:00");
+    	assertThat(priceRepository.getPriceByProductAndBrand(35455l, 1l, dateCase1).get(0).getPrice().floatValue()).isEqualTo(35.5f);
+    }
+    
 
 }
