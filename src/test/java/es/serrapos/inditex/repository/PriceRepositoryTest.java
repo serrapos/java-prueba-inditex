@@ -2,8 +2,10 @@ package es.serrapos.inditex.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import es.serrapos.inditex.domain.Brand;
+import es.serrapos.inditex.domain.PriceAndRate;
 import es.serrapos.inditex.domain.Product;
 
 @DataJpaTest
@@ -64,6 +67,23 @@ public class PriceRepositoryTest {
     	assertThat(priceRepository.findFirstByProductAndBrandAndStartDateLessThanAndEndDateGreaterThanOrderByPriorityDesc(product.get(), brand.get(), dateCase4, dateCase4).getPrice().floatValue()).isEqualTo(30.50f);
     	assertThat(priceRepository.findFirstByProductAndBrandAndStartDateLessThanAndEndDateGreaterThanOrderByPriorityDesc(product.get(), brand.get(), dateCase5, dateCase5).getPrice().floatValue()).isEqualTo(38.95f);
     	assertThat(priceRepository.findFirstByProductAndBrandAndStartDateLessThanAndEndDateGreaterThanOrderByPriorityDesc(product.get(), brand.get(), dateCase6, dateCase6)).isNull();
+    }
+    
+    @Test
+    public void testGetPriceWithQuery() throws Exception{
+    	SimpleDateFormat datetimeFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+		Date dateCase1 = datetimeFormatter.parse("2020-06-14 10:00:00");
+		Date dateCase2 = datetimeFormatter.parse("2020-06-14 16:00:00");
+		Date dateCase3 = datetimeFormatter.parse("2020-06-14 21:00:00");
+		Date dateCase4 = datetimeFormatter.parse("2020-06-15 10:00:00");
+		Date dateCase5 = datetimeFormatter.parse("2020-06-15 21:00:00");
+		Date dateCase6 = datetimeFormatter.parse("2020-01-01 21:00:00");
+    	assertThat(priceRepository.getPriceByProductAndBrand(35455l, 1l, dateCase1).get(0).getPrice().floatValue()).isEqualTo(35.5f);
+    	assertThat(priceRepository.getPriceByProductAndBrand(35455l, 1l, dateCase2).get(0).getPrice().floatValue()).isEqualTo(25.45f);
+    	assertThat(priceRepository.getPriceByProductAndBrand(35455l, 1l, dateCase3).get(0).getPrice().floatValue()).isEqualTo(35.5f);
+    	assertThat(priceRepository.getPriceByProductAndBrand(35455l, 1l, dateCase4).get(0).getPrice().floatValue()).isEqualTo(30.5f);
+    	assertThat(priceRepository.getPriceByProductAndBrand(35455l, 1l, dateCase5).get(0).getPrice().floatValue()).isEqualTo(38.95f);
+    	assertThat(priceRepository.getPriceByProductAndBrand(35455l, 1l, dateCase6).size()).isEqualTo(0);
     }
     
 

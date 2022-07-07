@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.serrapos.inditex.domain.Price;
+import es.serrapos.inditex.domain.PriceAndRate;
 import es.serrapos.inditex.dto.PriceResponseDto;
 import es.serrapos.inditex.service.PriceService;
 
@@ -21,12 +22,12 @@ public class PriceController {
 	
 	@GetMapping("/product/{productId}/price")
 	PriceResponseDto getPrice(@PathVariable Long productId, @RequestParam(name = "brand") Long brandId, @RequestParam(name="date") @DateTimeFormat(pattern="yyyy-MM-dd-HH.mm.ss") Date datePurchase) {
-		Price price = priceService.calculatePriceByProductAndBrand(productId, brandId, datePurchase);
-		return convertPriceToDto(price);
+		PriceAndRate price = priceService.calculatePriceByProductAndBrand(productId, brandId, datePurchase);
+		return convertPriceToDto(price, productId, brandId);
 	}
 	
-	private PriceResponseDto convertPriceToDto(Price price) {
-		PriceResponseDto response = new PriceResponseDto(price.getProduct().getId(), price.getBrand().getId(), price.getRate().getId(), price.getStartDate(), price.getEndDate(), price.getPrice());
+	private PriceResponseDto convertPriceToDto(PriceAndRate price, Long productId, Long brandId) {
+		PriceResponseDto response = new PriceResponseDto(productId, brandId, price.getRateId(), price.getStartDate(), price.getEndDate(), price.getPrice());
 		return response;
 	}
 }

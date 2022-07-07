@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import es.serrapos.inditex.domain.Price;
+import es.serrapos.inditex.domain.PriceAndRate;
 
 @SpringBootTest
 public class PriceServiceTest {
@@ -21,13 +21,13 @@ public class PriceServiceTest {
 	@Test
 	public void testCalculatePriceByProductAndBrand_ProductNotFound() {
 		Exception exception = assertThrows(Exception.class, () -> priceService.calculatePriceByProductAndBrand(1000l, 1000l, new Date()));
-		assertEquals("404 NOT_FOUND \"product not found\"", exception.getMessage());
+		assertEquals("404 NOT_FOUND \"price not found\"", exception.getMessage());
 	}
 	
 	@Test
 	public void testCalculatePriceByProductAndBrand_BrandNotFound() {
 		Exception exception = assertThrows(Exception.class, () -> priceService.calculatePriceByProductAndBrand(35455l, 1000l, new Date()));
-		assertEquals("404 NOT_FOUND \"brand not found\"", exception.getMessage());
+		assertEquals("404 NOT_FOUND \"price not found\"", exception.getMessage());
 	}
 	
 	@Test
@@ -40,7 +40,7 @@ public class PriceServiceTest {
 	public void testCalculatePriceByProductAndBrand_Ok() throws Exception{
 		SimpleDateFormat datetimeFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
 		Date dateCase1 = datetimeFormatter.parse("2020-06-14 10:00:00");
-		Price price = priceService.calculatePriceByProductAndBrand(35455l, 1l, dateCase1);
+		PriceAndRate price = priceService.calculatePriceByProductAndBrand(35455l, 1l, dateCase1);
 		assertEquals(price.getPrice().floatValue(), 35.5f);
 	}
 	
